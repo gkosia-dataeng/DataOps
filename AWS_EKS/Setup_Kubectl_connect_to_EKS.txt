@@ -1,0 +1,12 @@
+1. Set aws cli credentials to the aws account
+2. Update kubectl config using the aws cli
+
+        aws eks update-kubeconfig --region us-east-1 --name epimetheus --profile default --role-arn arn:aws:iam::941154566110:role/stage-epimetheus-master
+        
+        Verify that the current-context is switched to the cluster wanted: ~/.kube/config
+
+3. Use kubectl
+
+    get namespaces: kubectl get namespaces
+    list pods of namespace: kubectl get pods -n wht-calculator
+    get the logs of a pod: kubectl logs wht-calculator-trades-847955bb79-fb7nx -n wht-calculator
