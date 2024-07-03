@@ -1,0 +1,74 @@
+https://www.youtube.com/watch?v=1zcXudjSVUs, https://github.com/marcel-dempers/docker-development-youtube-series/tree/master/kubernetes/kubectl
+https://github.com/marcel-dempers/docker-development-youtube-series/tree/master/kubernetes/kubectl
+
+kind: run k8 clusteres locally
+
+
+Install:
+    Choose a CubECTL version equal or slidly newer version than the k8 cluster version
+    Download the .exe and add it to path
+    run kubectl version to check if its ok
+
+
+Setup conf file:
+
+    ~(Users in windows)/.kube/conf: edit it to point to the k8 cluster you want to run the commands
+
+            Clusters: listo of clusters
+            Contexts: bind cluster and user (user will used to access the cluster)
+            current-contaxt: in which context to point now
+            users: user credentials
+
+            Split config files:
+                Delete config file
+                Store a config file for each environment separetly
+                Point to the config i want to work by exporting the variable 
+                    $ENV:KUBECONFIG="C:\path/to/config": variable is available only in working terminal
+
+Namespace: used to group resources for managing (security, accces)
+
+
+
+Commands: 
+
+    cubectl config current-context: in which cluster pointing now
+    cubectl config get-contexts: list the available contexts
+    cubectl config use-context <context-name>: switch to specific context
+
+
+    kubectl get <resource>: get info about the resource
+        kubectl get namespaces: list namespaces
+                    pods
+                    deployments
+                    services
+                    configmaps
+                    secrets
+                    ingress
+                    nodes
+    kubectl create: create new resource
+                    the resource will be creaded in default namespace except if we specify the -n <namespace>
+    kubectl describe <resource>: get details about the resource
+    
+    kubectl apply: apply changes
+
+
+    kubectl -n dev-resources create deployment webserver --image nginx --port=80: create deployment
+    kubectl -n dev-resources get deploy: get the deployments in namespace
+    kubectl -n dev-resources get pods: get pods
+
+    kubectl -n dev-resources create service clusterip webserver --tcp 80:80
+    kubectl -n dev-resources get service
+
+    kubectl -n dev-resources port-forward service/webserver 80: forward the port of localhost to resource service/webserver to port 80
+                                                                used to access a pod when is deployied privatly
+
+
+    kubectl -n dev-resources create configmap webserver-config --from-file config.json=./config.json
+    kubectl -n dev-resources create secret generic webserver-secret --from-file secrets.json=./config.json
+    kubectl -n dev-resources  get cm: to view configmaps
+
+
+    kubectl -n dev-resources get deploy -o yaml > ./webserver_deployment.yaml: export declaration of deployment
+
+
+    kubectl -n dev-resources apply -f ./webserver_deployment.yaml: apply changes based on yaml file
