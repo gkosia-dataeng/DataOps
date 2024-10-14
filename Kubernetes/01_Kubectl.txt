@@ -5,7 +5,7 @@ kind: run k8 clusteres locally
 
 
 Install:
-    Choose a CubECTL version equal or slidly newer version than the k8 cluster version
+    Choose a kubeCTL version equal or slidly newer version than the k8 cluster version
     Download the .exe and add it to path
     run kubectl version to check if its ok
 
@@ -31,9 +31,9 @@ Namespace: used to group resources for managing (security, accces)
 
 Commands: 
 
-    cubectl config current-context: in which cluster pointing now
-    cubectl config get-contexts: list the available contexts
-    cubectl config use-context <context-name>: switch to specific context
+    kubectl config current-context: in which cluster pointing now
+    kubectl config get-contexts: list the available contexts
+    kubectl config use-context <context-name>: switch to specific context
 
 
     kubectl get <resource>: get info about the resource
@@ -72,3 +72,12 @@ Commands:
 
 
     kubectl -n dev-resources apply -f ./webserver_deployment.yaml: apply changes based on yaml file
+
+
+
+    -- Get secret and decode base64 secret value
+    kubectl get secret hub-risk-management -n hub-risk-management -o json
+    echo 'UDNQLUxENA==' | base64 --decode
+
+    -- ssh on k8 container
+    kubectl exec -it asic-london-5c49db5b9-r8pq2 -n hub-risk-management /bin/bash
